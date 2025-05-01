@@ -4,4 +4,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 export class AuthPayload {
   @Field(() => ID)
   userId: string;
+
+  @Field()
+  token: string;
 }

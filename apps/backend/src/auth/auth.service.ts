@@ -4,10 +4,14 @@ import * as bcrypt from 'bcrypt';
 import { RegisterInput } from './dto/register.input';
 import { LoginInput } from './dto/login.input';
 import { AuthPayload } from './models/auth-payload.model';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async register(data: RegisterInput): Promise<AuthPayload> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -19,7 +23,9 @@ export class AuthService {
       },
     });
 
-    return { userId: user.id };
+    const token = this.jwtService.sign({ userId: user.id });
+
+    return { userId: user.id, token };
   }
 
   async login(data: LoginInput): Promise<AuthPayload> {
@@ -31,6 +37,8 @@ export class AuthService {
       throw new Error('Invalid credentials');
     }
 
-    return { userId: user.id };
+    const token = this.jwtService.sign({ userId: user.id });
+
+    return { userId: user.id, token };
   }
 }
