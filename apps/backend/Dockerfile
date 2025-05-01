@@ -13,11 +13,14 @@ RUN npm install
 # Copier le reste des fichiers du projet
 COPY . .
 
-# Construire le projet
+# Exécuter les migrations Prisma au démarrage
+RUN npx prisma generate
+
+# Construire le projet (Nest compile dans dist/)
 RUN npm run build
 
 # Exposer le port de l’API
 EXPOSE 3001
 
-# Commande de démarrage
-CMD ["npm", "run", "start"]
+# Démarrer : appliquer la migration puis lancer l'app
+CMD npx prisma migrate deploy && node dist/main.js
