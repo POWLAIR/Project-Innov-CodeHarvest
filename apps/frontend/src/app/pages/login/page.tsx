@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -19,7 +21,7 @@ const LoginPage = () => {
                     try {
                         setAuthError(null);
 
-                        const res = await fetch('http://localhost:3001/graphql', {
+                        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
