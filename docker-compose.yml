@@ -15,24 +15,28 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./apps/backend
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
     container_name: backend
-    restart: always
+    restart: unless-stopped
     depends_on:
       - postgres
-    environment:
-      DATABASE_URL: "postgresql://admin:password@postgres:5432/farmgame?schema=public"
+    env_file:
+      - ./apps/backend/.env
     ports:
       - "3001:3001"
 
   frontend:
-    build: ./apps/frontend
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
     container_name: frontend
-    restart: always
-    depends_on:
-      - backend
+    restart: unless-stopped
     ports:
       - "3000:3000"
+    env_file:
+      - ./apps/frontend/.env
 
   pgadmin:
     image: dpage/pgadmin4

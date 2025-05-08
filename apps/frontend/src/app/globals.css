@@ -22,3 +22,18 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.pixel-pattern {
+  background-image: url("/pixel-pattern.png");
+  background-size: 100px 100px;
+  background-repeat: repeat;
+}
+
+@font-face {
+  font-family: "Pixel";
+  src: url("/fonts/PixelOperator-Bold.ttf") format("truetype");
+}
+
+.pixel-font {
+  font-family: "Pixel", monospace;
+}
