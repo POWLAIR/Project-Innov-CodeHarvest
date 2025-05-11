@@ -12,6 +12,9 @@ COPY . .
 # Installer les dépendances
 RUN npm install
 
+# Copier le fichier schema.prisma
+COPY ../../prisma ../../prisma
+
 # Générer le client Prisma
 RUN npx prisma generate
 
