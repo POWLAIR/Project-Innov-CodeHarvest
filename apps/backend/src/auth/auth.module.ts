@@ -7,5 +7,6 @@ import { PrismaService } from '../prisma.service';
 @Module({
   imports: [JwtModule.register({ secret: 'SECRET_KEY', signOptions: { expiresIn: '7d' } })],
   providers: [AuthService, AuthResolver, PrismaService],
+  exports: [JwtModule],
 })
 export class AuthModule {}

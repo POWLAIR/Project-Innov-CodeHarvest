@@ -1,4 +1,3 @@
-// components/FarmMap.tsx
 'use client';
 
 import { motion, useAnimation } from 'framer-motion';
@@ -7,20 +6,22 @@ import { useRef, useState } from 'react';
 import { FarmElement, getFarmElements } from '../../lib/farmElements';
 import FarmInteractionPanel from './FarmInteractionPanel';
 import { Farm } from '../types/farm';
+
 interface Props {
     farm: Farm;
     setFarm: (updated: Farm) => void;
+    notify: (message: string) => void
 }
 
 const FarmMap = ({ farm, setFarm }: Props) => {
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [selectedElement, setSelectedElement] = useState<FarmElement | null>(null);
+    const [upgradedElementId, setUpgradedElementId] = useState<string | null>(null);
     const controls = useAnimation();
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleWheel = (e: React.WheelEvent) => {
-        console.log('handleWheel e:', e);
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.1 : 0.1;
         setScale((prev) => Math.min(Math.max(prev + delta, 0.8), 2));
@@ -31,7 +32,6 @@ const FarmMap = ({ farm, setFarm }: Props) => {
     let lastY = 0;
 
     const handleMouseDown = (e: React.MouseEvent) => {
-        console.log('handleMouseDown e:', e);
         isDragging = true;
         lastX = e.clientX;
         lastY = e.clientY;
@@ -40,7 +40,6 @@ const FarmMap = ({ farm, setFarm }: Props) => {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-        console.log('handleMouseMove e:', e);
         if (!isDragging) return;
         const dx = e.clientX - lastX;
         const dy = e.clientY - lastY;
@@ -90,6 +89,17 @@ const FarmMap = ({ farm, setFarm }: Props) => {
                             width={element.width}
                             height={element.height}
                         />
+                        {upgradedElementId === element.id && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: -20 }}
+                                exit={{ opacity: 0, y: -30 }}
+                                transition={{ duration: 1 }}
+                                className="absolute left-1/2 transform -translate-x-1/2 text-green-400 text-sm font-pixel"
+                            >
+                                +1 niveau !
+                            </motion.div>
+                        )}
                     </motion.div>
                 ))}
             </motion.div>
@@ -98,10 +108,13 @@ const FarmMap = ({ farm, setFarm }: Props) => {
                 <FarmInteractionPanel
                     element={selectedElement}
                     onClose={() => setSelectedElement(null)}
-                    onUpgrade={(_e?: unknown) => {
-                        console.log('onUpgrade e:', _e);
-                        setFarm({ ...farm, [`${selectedElement.type === 'field' ? 'corn' : selectedElement.type}Level`]: selectedElement.level + 1 })
+                    onUpgrade={async () => {
+                        const key = `${selectedElement.type === 'field' ? 'corn' : selectedElement.type}Level` as keyof Farm;
+                        setFarm({ ...farm, [key]: (farm[key] as number) + 1 });
+                        setUpgradedElementId(selectedElement.id);
+                        setTimeout(() => setUpgradedElementId(null), 2000);
                     }}
+
                 />
             )}
         </div>

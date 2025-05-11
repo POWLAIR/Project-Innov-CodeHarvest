@@ -6,7 +6,4 @@ export interface Farm {
     barnLevel: number;
     treeLevel: number;
     npcLevel: number;
-    chickenLevel: number;
-    cowLevel: number;
-    sheepLevel: number;
   }

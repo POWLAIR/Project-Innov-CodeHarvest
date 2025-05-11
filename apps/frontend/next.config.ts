@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const NextConfig = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
@@ -11,4 +11,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default NextConfig;

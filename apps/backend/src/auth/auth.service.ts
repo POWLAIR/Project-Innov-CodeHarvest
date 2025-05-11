@@ -28,6 +28,12 @@ export class AuthService {
       data: {
         email: data.email,
         password_hash: hashedPassword,
+        farm: {
+          create: {},
+        },
+      },
+      include: {
+        farm: true,
       },
     });
   
@@ -35,6 +41,7 @@ export class AuthService {
   
     return { userId: user.id, token };
   }
+  
   
   async login(data: LoginInput): Promise<AuthPayload> {
     const user = await this.prisma.user.findUnique({

@@ -16,6 +16,8 @@ model User {
   coins         Int      @default(0)
   created_at    DateTime @default(now())
   farm          Farm?
+  quests        Quest[]
+  userQuests    UserQuest[]
 }
 
 model Farm {
@@ -31,4 +33,32 @@ model Farm {
   npcLevel    Int      @default(1)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Quest {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  title       String
+  description String
+  elementId   String
+  difficulty  Int      @default(1)
+  xp_reward   Int      @default(0)
+  coins_reward Int     @default(0)
+  isAvailable Boolean  @default(true)
+  isActive    Boolean  @default(false)
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  userQuests  UserQuest[]
+}
+
+model UserQuest {
+  id        String   @id @default(uuid())
+  userId    String
+  questId   String
+  status    String   // "En cours", "Réussi", "Échec"
+  attempts  Int
+  createdAt DateTime @default(now())
+  user   User @relation(fields: [userId], references: [id])
+  quest  Quest @relation(fields: [questId], references: [id])
 }
