@@ -14,7 +14,7 @@ RUN npm install
 COPY apps/backend ./
 
 # Étape 6 : Copier le dossier prisma depuis la racine du projet (grâce au context Docker)
-COPY prisma ./prisma
+COPY apps/backend/prisma ./prisma
 
 # Étape 7 : Générer le client Prisma
 RUN npx prisma generate
