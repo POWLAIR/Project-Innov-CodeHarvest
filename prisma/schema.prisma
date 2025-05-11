@@ -27,6 +27,8 @@ model Farm {
   coins       Int      @default(0)
   cornLevel   Int      @default(1)
   barnLevel   Int      @default(1)
+  treeLevel   Int      @default(1)
+  npcLevel    Int      @default(1)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

@@ -1,22 +1,26 @@
+// components/FarmMap.tsx
 'use client';
 
 import { motion, useAnimation } from 'framer-motion';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { getFarmElementsByLevel } from '../../lib/farmElements';
-
+import { FarmElement, getFarmElements } from '../../lib/farmElements';
+import FarmInteractionPanel from './FarmInteractionPanel';
+import { Farm } from '../types/farm';
 interface Props {
-    level?: number;
+    farm: Farm;
+    setFarm: (updated: Farm) => void;
 }
 
-const FarmMap = ({ level = 1 }: Props) => {
-    const elements = getFarmElementsByLevel(level);
+const FarmMap = ({ farm, setFarm }: Props) => {
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [selectedElement, setSelectedElement] = useState<FarmElement | null>(null);
     const controls = useAnimation();
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleWheel = (e: React.WheelEvent) => {
+        console.log('handleWheel e:', e);
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.1 : 0.1;
         setScale((prev) => Math.min(Math.max(prev + delta, 0.8), 2));
@@ -27,6 +31,7 @@ const FarmMap = ({ level = 1 }: Props) => {
     let lastY = 0;
 
     const handleMouseDown = (e: React.MouseEvent) => {
+        console.log('handleMouseDown e:', e);
         isDragging = true;
         lastX = e.clientX;
         lastY = e.clientY;
@@ -35,6 +40,7 @@ const FarmMap = ({ level = 1 }: Props) => {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+        console.log('handleMouseMove e:', e);
         if (!isDragging) return;
         const dx = e.clientX - lastX;
         const dy = e.clientY - lastY;
@@ -49,6 +55,8 @@ const FarmMap = ({ level = 1 }: Props) => {
         document.removeEventListener('mouseup', handleMouseUp);
     };
 
+    const elements = getFarmElements(farm);
+
     return (
         <div
             ref={containerRef}
@@ -62,31 +70,40 @@ const FarmMap = ({ level = 1 }: Props) => {
                 style={{ scale, x: position.x, y: position.y }}
                 transition={{ type: 'spring', stiffness: 150, damping: 30 }}
             >
-                {/* Background */}
                 <Image
-                    src="/background/farm-lv1.png"
+                    src="/background/base.png"
                     alt="Farm background"
                     fill
                     className="z-0 object-cover"
                 />
 
-                {/* Farm elements dynamiques */}
-                {elements.map((element) => (
+                {elements.map((element: FarmElement) => (
                     <motion.div
                         key={element.id}
                         className={`${element.style} cursor-pointer`}
                         whileHover={{ scale: 1.1 }}
-                        onClick={() => alert(element.alt)}
+                        onClick={() => setSelectedElement(element)}
                     >
                         <Image
                             src={element.image}
                             alt={element.alt}
-                            width={96}
-                            height={96}
+                            width={element.width}
+                            height={element.height}
                         />
                     </motion.div>
                 ))}
             </motion.div>
+
+            {selectedElement && (
+                <FarmInteractionPanel
+                    element={selectedElement}
+                    onClose={() => setSelectedElement(null)}
+                    onUpgrade={(_e?: unknown) => {
+                        console.log('onUpgrade e:', _e);
+                        setFarm({ ...farm, [`${selectedElement.type === 'field' ? 'corn' : selectedElement.type}Level`]: selectedElement.level + 1 })
+                    }}
+                />
+            )}
         </div>
     );
 };

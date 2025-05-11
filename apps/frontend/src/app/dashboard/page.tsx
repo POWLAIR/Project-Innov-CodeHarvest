@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import FarmMap from '@/components/FarmMap';
+import FarmProgressionPanel from '@/components/FarmProgressionPanel';
 import { useFarmState } from '@/hooks/useFarmState';
 
 const Dashboard = () => {
@@ -11,7 +12,7 @@ const Dashboard = () => {
         if (!token) window.location.href = '/login';
     }, []);
 
-    const { level, xp, coins, loading } = useFarmState();
+    const { farm, loading, setFarm } = useFarmState();
 
     if (loading) {
         return (
@@ -22,27 +23,39 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="relative min-h-screen bg-[#0f1c1c] font-pixel text-yellow-100 overflow-hidden">
+        <div className="min-h-screen bg-[#0e1616] font-pixel text-yellow-100 overflow-x-hidden">
             <Navbar />
 
-            {/* Zone ferme avec niveau dynamique */}
-            <FarmMap level={level} />
+            {/* Carte interactive */}
+            <section className="px-4 mt-4">
+                <FarmMap farm={farm} setFarm={setFarm} />
+            </section>
 
-            {/* HUD joueur */}
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-[#1e2d2b] border-4 border-yellow-400 px-6 py-2 rounded-lg shadow-xl z-20">
-                <p className="text-sm">
-                    Level: {level} | XP: {xp} | Coins: {coins}
-                </p>
+            {/* HUD Joueur */}
+            <div className="mt-4 flex justify-center">
+                <div className="bg-[#1e2d2b] border-4 border-yellow-400 px-6 py-2 rounded-lg shadow-md text-center">
+                    <p className="text-sm">
+                        🎖️ Level: {farm.level} &nbsp;&nbsp; ✨ XP: {farm.xp} &nbsp;&nbsp; 🪙 Coins: {farm.coins}
+                    </p>
+                </div>
             </div>
 
             {/* Quêtes */}
-            <div className="max-w-lg mx-auto mt-10 p-4 border-4 border-yellow-400 bg-[#0b1d1d] rounded-xl shadow-xl z-10">
-                <h2 className="text-xl mb-2 text-center">Quêtes</h2>
-                <ul className="list-disc list-inside">
-                    <li>– Récolter 10 carottes</li>
-                    <li>– Vendre 5 œufs</li>
-                </ul>
-            </div>
+            <section className="max-w-lg mx-auto mt-6 px-4">
+                <div className="bg-[#162c2b] border-4 border-yellow-400 p-4 rounded-xl shadow-xl">
+                    <h2 className="text-xl mb-2 text-center text-yellow-200">📜 Quêtes</h2>
+                    <ul className="list-disc list-inside space-y-1 text-yellow-100">
+                        <li>– Récolter 10 carottes</li>
+                        <li>– Vendre 5 œufs</li>
+                    </ul>
+                </div>
+            </section>
+
+            {/* Progression */}
+            <section className="mt-8 px-4">
+                <h2 className="text-center text-yellow-200 text-lg mb-3">📈 Progression de la ferme</h2>
+                <FarmProgressionPanel />
+            </section>
         </div>
     );
 };
