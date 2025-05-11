@@ -14,20 +14,35 @@ export class AuthService {
   ) {}
 
   async register(data: RegisterInput): Promise<AuthPayload> {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: data.email },
+    });
+  
+    if (existingUser) {
+      throw new Error('Cet email est déjà utilisé.');
+    }
+  
     const hashedPassword = await bcrypt.hash(data.password, 10);
-
+  
     const user = await this.prisma.user.create({
       data: {
         email: data.email,
         password_hash: hashedPassword,
+        farm: {
+          create: {},
+        },
+      },
+      include: {
+        farm: true,
       },
     });
-
+  
     const token = this.jwtService.sign({ userId: user.id });
-
+  
     return { userId: user.id, token };
   }
-
+  
+  
   async login(data: LoginInput): Promise<AuthPayload> {
     const user = await this.prisma.user.findUnique({
       where: { email: data.email },

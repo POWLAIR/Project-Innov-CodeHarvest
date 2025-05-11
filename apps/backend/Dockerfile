@@ -1,26 +1,29 @@
-# Utiliser l'image Node.js
+# Étape 1 : Utiliser une image Node.js
 FROM node:18-alpine
 
-# Définir le répertoire de travail
+# Étape 2 : Définir le dossier de travail
 WORKDIR /usr/src/app
 
-# Copier les fichiers package.json et package-lock.json
-COPY package*.json ./
+# Étape 3 : Copier uniquement les fichiers nécessaires à l'installation des dépendances
+COPY apps/backend/package*.json ./
 
-# Installer les dépendances
+# Étape 4 : Installer les dépendances backend
 RUN npm install
 
-# Copier le reste des fichiers du projet
-COPY . .
+# Étape 5 : Copier le backend
+COPY apps/backend ./
 
-# Exécuter les migrations Prisma au démarrage
+# Étape 6 : Copier le dossier prisma depuis la racine du projet (grâce au context Docker)
+COPY prisma ./prisma
+
+# Étape 7 : Générer le client Prisma
 RUN npx prisma generate
 
-# Construire le projet (Nest compile dans dist/)
+# Étape 8 : Compiler l'application NestJS
 RUN npm run build
 
-# Exposer le port de l’API
+# Étape 9 : Exposer le port utilisé par le backend
 EXPOSE 3001
 
-# Démarrer : appliquer la migration puis lancer l'app
-CMD npx prisma migrate deploy && node dist/main.js
+# Étape 10 : Démarrer l'application (et appliquer les migrations)
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
