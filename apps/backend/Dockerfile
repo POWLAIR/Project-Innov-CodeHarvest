@@ -21,7 +21,6 @@ RUN npx prisma generate
 # Compiler le code NestJS
 RUN npm run build
 
-
 # Étape 2 : Image finale
 FROM node:20-alpine
 
