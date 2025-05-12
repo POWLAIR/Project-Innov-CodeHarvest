@@ -53,12 +53,16 @@ model Quest {
 }
 
 model UserQuest {
-  id        String   @id @default(uuid())
   userId    String
   questId   String
   status    String   // "En cours", "Réussi", "Échec"
   attempts  Int
   createdAt DateTime @default(now())
-  user   User @relation(fields: [userId], references: [id])
-  quest  Quest @relation(fields: [questId], references: [id])
+  repoUrl   String?  // URL du repo GitHub pour la quête (si créé)
+  
+  user      User     @relation(fields: [userId], references: [id])
+  quest     Quest    @relation(fields: [questId], references: [id])
+  
+  @@id([userId, questId])  // Composite primary key
 }
+

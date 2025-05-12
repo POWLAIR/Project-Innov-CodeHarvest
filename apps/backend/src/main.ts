@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   app.enableCors({
-    origin: ['http://localhost:3000', process.env.NEXT_PUBLIC_API_URL],
+    origin: ['http://localhost:3000', 'https://project-innov-code-harvest-frontend.vercel.app'],
     credentials: true,
   });
 

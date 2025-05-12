@@ -6,6 +6,8 @@ import { AppResolver } from './app.resolver';
 import { AuthModule } from './auth/auth.module';
 import { FarmModule } from './app/farm/farm.module';
 import { QuestModule } from './app/quests/quest.module';
+import { GithubModule } from './github/github.module';
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -16,6 +18,7 @@ import { QuestModule } from './app/quests/quest.module';
     AuthModule,
     FarmModule,
     QuestModule,
+    GithubModule, 
   ],
   providers: [AppResolver],
 })
