@@ -14,22 +14,6 @@ const LoginPage = () => {
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 pixel-pattern" />
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
-            <div className="glass-effect p-8 w-full max-w-md rounded-2xl relative z-10">
-                <div className="flex justify-center mb-6">
-                    <Image
-                        src="/codeharvest-logo.png"
-                        alt="Logo"
-                        width={80}
-                        height={80}
-<<<<<<< HEAD
-                        className="glow rounded-2xl" 
-=======
 
             <div className="glass-effect p-8 w-full max-w-md rounded-2xl relative z-10">
                 <div className="flex justify-center mb-6">
@@ -39,10 +23,6 @@ const LoginPage = () => {
                         width={80}
                         height={80}
                         className="glow rounded-2xl"
->>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
-=======
-                        className="glow rounded-2xl"
->>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
                     />
                 </div>
                 <h1 className="text-center text-white text-3xl font-bold mb-8 pixel-font">Connexion</h1>
@@ -108,15 +88,7 @@ const LoginPage = () => {
                             <p className="text-center text-white/80 text-sm">
                                 Pas encore de compte ?{' '}
                                 <Link href="/signup" className="text-indigo-300 hover:text-indigo-200 hover-scale inline-block">
-<<<<<<< HEAD
                                     S'inscrire
-<<<<<<< HEAD
-=======
-                                    S&#39;inscrire
->>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
-=======
-
->>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
                                 </Link>
                             </p>
                         </Form>

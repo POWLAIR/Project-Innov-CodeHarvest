@@ -15,21 +15,9 @@ interface Props {
 
 const FarmMap = ({ farm, setFarm, notify }: Props) => {
     const [selectedElement, setSelectedElement] = useState<FarmElement | null>(null);
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const [upgradedElementId, setUpgradedElementId] = useState<string | null>(null);
-    const controls = useAnimation();
-    const containerRef = useRef<HTMLDivElement>(null);
-=======
     // const [upgradedElementId, setUpgradedElementId] = useState<string | null>(null);
     // const controls = useAnimation();
     // const containerRef = useRef<HTMLDivElement>(null);
->>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
-=======
-    // const [upgradedElementId, setUpgradedElementId] = useState<string | null>(null);
-    // const controls = useAnimation();
-    // const containerRef = useRef<HTMLDivElement>(null);
->>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
 
     const elements = getFarmElements(farm);
 
@@ -189,14 +177,6 @@ const FarmMap = ({ farm, setFarm, notify }: Props) => {
                     onUpgrade={async () => {
                         const key = `${selectedElement.type === 'field' ? 'corn' : selectedElement.type}Level` as keyof Farm;
                         setFarm({ ...farm, [key]: (farm[key] as number) + 1 });
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        setUpgradedElementId(selectedElement.id);
-                        setTimeout(() => setUpgradedElementId(null), 2000);
-=======
->>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
-=======
->>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
                         notify(`${selectedElement.alt} amélioré au niveau ${(farm[key] as number) + 1} !`);
                     }}
                 />

@@ -112,7 +112,7 @@ const QuestDetailPage = () => {
                     height={editorHeight}
                     language={language}
                     value={editorValue}
-                    onChange={(value) => setEditorValue(value || '')}
+                    onChange={(value: string) => setEditorValue(value || '')}
                 />
             </div>
 
