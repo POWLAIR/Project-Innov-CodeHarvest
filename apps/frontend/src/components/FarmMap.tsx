@@ -61,7 +61,7 @@ const FarmMap = ({ farm, setFarm }: Props) => {
             ref={containerRef}
             onWheel={handleWheel}
             onMouseDown={handleMouseDown}
-            className="relative w-full h-[600px] overflow-hidden border-4 border-yellow-600 rounded-xl shadow-xl cursor-grab"
+            className="relative w-full h-[600px] overflow-hidden rounded-2xl glass-effect"
         >
             <motion.div
                 className="relative w-full h-full"
@@ -69,17 +69,18 @@ const FarmMap = ({ farm, setFarm }: Props) => {
                 style={{ scale, x: position.x, y: position.y }}
                 transition={{ type: 'spring', stiffness: 150, damping: 30 }}
             >
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20" />
                 <Image
                     src="/background/base.png"
                     alt="Farm background"
                     fill
-                    className="z-0 object-cover"
+                    className="z-0 object-cover opacity-90"
                 />
 
                 {elements.map((element: FarmElement) => (
                     <motion.div
                         key={element.id}
-                        className={`${element.style} cursor-pointer`}
+                        className={`${element.style} cursor-pointer hover-scale`}
                         whileHover={{ scale: 1.1 }}
                         onClick={() => setSelectedElement(element)}
                     >
@@ -88,6 +89,7 @@ const FarmMap = ({ farm, setFarm }: Props) => {
                             alt={element.alt}
                             width={element.width}
                             height={element.height}
+                            className="drop-shadow-lg"
                         />
                         {upgradedElementId === element.id && (
                             <motion.div
@@ -95,7 +97,7 @@ const FarmMap = ({ farm, setFarm }: Props) => {
                                 animate={{ opacity: 1, y: -20 }}
                                 exit={{ opacity: 0, y: -30 }}
                                 transition={{ duration: 1 }}
-                                className="absolute left-1/2 transform -translate-x-1/2 text-green-400 text-sm font-pixel"
+                                className="absolute left-1/2 transform -translate-x-1/2 text-emerald-300 text-sm font-pixel glow"
                             >
                                 +1 niveau !
                             </motion.div>
@@ -114,7 +116,6 @@ const FarmMap = ({ farm, setFarm }: Props) => {
                         setUpgradedElementId(selectedElement.id);
                         setTimeout(() => setUpgradedElementId(null), 2000);
                     }}
-
                 />
             )}
         </div>
