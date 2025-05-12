@@ -24,6 +24,7 @@ const SignupPage = () => {
     const handleSubmit = async (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
         try {
             setSignupError(null);
+            console.log('Calling API at', process.env.NEXT_PUBLIC_API_URL);
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
