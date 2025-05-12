@@ -19,7 +19,7 @@ const WelcomeModal = ({ onClose }: { onClose: () => void }) => {
                     onClick={onClose}
                     className="glass-effect hover:bg-white/10 px-6 py-3 rounded-xl text-white font-semibold transition-all duration-200 hover-scale"
                 >
-                    Commencer l'aventure
+                    Commencer l&apos;aventure
                 </button>
             </motion.div>
         </div>

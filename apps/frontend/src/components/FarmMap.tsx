@@ -1,8 +1,8 @@
 'use client';
 
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { FarmElement, getFarmElements } from '../../lib/farmElements';
 import FarmInteractionPanel from './FarmInteractionPanel';
 import { Farm } from '../types/farm';
@@ -15,9 +15,9 @@ interface Props {
 
 const FarmMap = ({ farm, setFarm, notify }: Props) => {
     const [selectedElement, setSelectedElement] = useState<FarmElement | null>(null);
-    const [upgradedElementId, setUpgradedElementId] = useState<string | null>(null);
-    const controls = useAnimation();
-    const containerRef = useRef<HTMLDivElement>(null);
+    // const [upgradedElementId, setUpgradedElementId] = useState<string | null>(null);
+    // const controls = useAnimation();
+    // const containerRef = useRef<HTMLDivElement>(null);
 
     const elements = getFarmElements(farm);
 
@@ -177,8 +177,6 @@ const FarmMap = ({ farm, setFarm, notify }: Props) => {
                     onUpgrade={async () => {
                         const key = `${selectedElement.type === 'field' ? 'corn' : selectedElement.type}Level` as keyof Farm;
                         setFarm({ ...farm, [key]: (farm[key] as number) + 1 });
-                        setUpgradedElementId(selectedElement.id);
-                        setTimeout(() => setUpgradedElementId(null), 2000);
                         notify(`${selectedElement.alt} amélioré au niveau ${(farm[key] as number) + 1} !`);
                     }}
                 />

@@ -31,7 +31,7 @@ const QuestSuccessModal: FC<QuestSuccessModalProps> = ({ xp, coins, upgradeInfo,
                             🎉
                         </motion.div>
                         <h2 className="text-3xl font-bold text-white mb-6">Quête réussie !</h2>
-                        
+
                         <div className="space-y-4 mb-8">
                             <motion.div
                                 initial={{ x: -20, opacity: 0 }}
@@ -41,7 +41,7 @@ const QuestSuccessModal: FC<QuestSuccessModalProps> = ({ xp, coins, upgradeInfo,
                             >
                                 <p className="text-xl text-white">✨ +{xp} XP</p>
                             </motion.div>
-                            
+
                             <motion.div
                                 initial={{ x: 20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
@@ -67,7 +67,7 @@ const QuestSuccessModal: FC<QuestSuccessModalProps> = ({ xp, coins, upgradeInfo,
                             onClick={onClose}
                             className="glass-effect hover:bg-white/10 px-8 py-3 rounded-xl text-white font-semibold transition-all hover-scale"
                         >
-                            Continuer l'aventure
+                            Continuer l&apos;aventure
                         </button>
                     </div>
                 </motion.div>
