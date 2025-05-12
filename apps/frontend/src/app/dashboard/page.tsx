@@ -17,7 +17,6 @@ const Dashboard = () => {
         const token = localStorage.getItem('token');
         if (!token) window.location.href = '/login';
 
-        // Affiche la modale de bienvenue uniquement si elle n'a pas déjà été vue
         const hasSeenWelcome = localStorage.getItem('welcomeShown');
         if (!hasSeenWelcome && farm?.level === 1) {
             setShowWelcome(true);
@@ -27,45 +26,58 @@ const Dashboard = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#0f1c1c] font-pixel text-yellow-100 flex items-center justify-center">
-                Chargement de la ferme...
+            <div className="min-h-screen flex items-center justify-center relative">
+                <div className="absolute inset-0 pixel-pattern" />
+                <div className="glass-effect p-6 rounded-xl text-white">
+                    Chargement de la ferme...
+                </div>
             </div>
         );
     }
 
     if (!farm) {
         return (
-            <div className="min-h-screen bg-[#0e1616] font-pixel text-yellow-100 flex items-center justify-center">
-                🚧 Aucune ferme trouvée pour cet utilisateur.
+            <div className="min-h-screen flex items-center justify-center relative">
+                <div className="absolute inset-0 pixel-pattern" />
+                <div className="glass-effect p-6 rounded-xl text-white">
+                    🚧 Aucune ferme trouvée pour cet utilisateur.
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-[#0e1616] font-pixel text-yellow-100 overflow-x-hidden relative">
-            <HUD />
-            <Navbar />
-            {showWelcome && <WelcomeModal onClose={() => setShowWelcome(false)} />}
+        <div className="min-h-screen relative">
+            <div className="absolute inset-0 pixel-pattern" />
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20" />
+            
+            <div className="relative z-10">
+                <HUD />
+                <Navbar />
 
-            {/* Carte interactive de la ferme */}
-            <section className="px-4 mt-4">
-                <FarmMap farm={farm} setFarm={setFarm} notify={addNotification} />
-            </section>
+                {showWelcome && <WelcomeModal onClose={() => setShowWelcome(false)} />}
 
-            {/* Statistiques joueur */}
-            <div className="mt-4 flex justify-center">
-                <div className="bg-[#1e2d2b] border-4 border-yellow-400 px-6 py-2 rounded-lg shadow-md text-center">
-                    <p className="text-sm">
-                        🎖️ Level: {farm.level} &nbsp;&nbsp; ✨ XP: {farm.xp} &nbsp;&nbsp; 🪙 Coins: {farm.coins}
-                    </p>
-                </div>
+                <main className="container mx-auto px-4 space-y-8">
+                    <section>
+                        <FarmMap farm={farm} setFarm={setFarm} notify={addNotification} />
+                    </section>
+
+                    <section className="flex justify-center">
+                        <div className="glass-effect px-8 py-4 rounded-xl text-white space-x-6">
+                            <span className="text-lg">🎖️ Niveau {farm.level}</span>
+                            <span className="text-lg">✨ XP: {farm.xp}</span>
+                            <span className="text-lg">🪙 Pièces: {farm.coins}</span>
+                        </div>
+                    </section>
+
+                    <section className="pb-8">
+                        <h2 className="text-center text-white text-2xl font-semibold mb-6">
+                            📈 Progression de la ferme
+                        </h2>
+                        <FarmProgressionPanel />
+                    </section>
+                </main>
             </div>
-
-            {/* Progression bâtiments */}
-            <section className="mt-8 px-4">
-                <h2 className="text-center text-yellow-200 text-lg mb-3">📈 Progression de la ferme</h2>
-                <FarmProgressionPanel />
-            </section>
         </div>
     );
 };
