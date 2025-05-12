@@ -31,6 +31,7 @@ const QuestSuccessModal: FC<QuestSuccessModalProps> = ({ xp, coins, upgradeInfo,
                             🎉
                         </motion.div>
                         <h2 className="text-3xl font-bold text-white mb-6">Quête réussie !</h2>
+<<<<<<< HEAD
                         
                         <div className="space-y-4 mb-8">
                             <motion.div
@@ -63,11 +64,49 @@ const QuestSuccessModal: FC<QuestSuccessModalProps> = ({ xp, coins, upgradeInfo,
                             </motion.p>
                         )}
 
+=======
+
+                        <div className="space-y-4 mb-8">
+                            <motion.div
+                                initial={{ x: -20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.2 }}
+                                className="glass-effect py-3 px-6 rounded-xl"
+                            >
+                                <p className="text-xl text-white">✨ +{xp} XP</p>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ x: 20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.4 }}
+                                className="glass-effect py-3 px-6 rounded-xl"
+                            >
+                                <p className="text-xl text-white">🪙 +{coins} pièces</p>
+                            </motion.div>
+                        </div>
+
+                        {upgradeInfo && (
+                            <motion.p
+                                initial={{ y: 10, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.6 }}
+                                className="text-emerald-300 text-lg mb-6 glow"
+                            >
+                                ⬆️ {upgradeInfo}
+                            </motion.p>
+                        )}
+
+>>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
                         <button
                             onClick={onClose}
                             className="glass-effect hover:bg-white/10 px-8 py-3 rounded-xl text-white font-semibold transition-all hover-scale"
                         >
+<<<<<<< HEAD
                             Continuer l'aventure
+=======
+                            Continuer l&#39;aventure
+>>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
                         </button>
                     </div>
                 </motion.div>
