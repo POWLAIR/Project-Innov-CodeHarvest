@@ -50,7 +50,6 @@ const Dashboard = () => {
         <div className="min-h-screen relative">
             <div className="absolute inset-0 pixel-pattern" />
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20" />
-            
             <div className="relative z-10">
                 <HUD />
                 <Navbar />
