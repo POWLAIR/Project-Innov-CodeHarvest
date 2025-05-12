@@ -47,8 +47,8 @@ const FarmMap = ({ farm, setFarm, notify }: Props) => {
             <div className="absolute inset-0 bg-gradient-to-b from-indigo-900 to-purple-900">
                 <div className="absolute inset-0 opacity-30">
                     <Image
-                        src="/background/stars.png"
-                        alt="Stars"
+                        src="/background/base.png"
+                        alt="background"
                         fill
                         className="object-cover"
                     />
