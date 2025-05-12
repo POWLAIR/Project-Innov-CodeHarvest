@@ -27,13 +27,13 @@ export const useHUD = () => {
                 {notifications.map(({ id, message }) => (
                     <motion.div
                         key={id}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-[#1e2d2b]/80 backdrop-blur-sm text-yellow-200 border border-yellow-400 px-4 py-2 rounded-lg shadow-lg font-pixel text-sm"
+                        initial={{ opacity: 0, x: 20, y: 0 }}
+                        animate={{ opacity: 1, x: 0, y: 0 }}
+                        exit={{ opacity: 0, x: 20, y: 0 }}
+                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                        className="glass-effect px-6 py-3 rounded-xl text-white shadow-lg max-w-sm"
                     >
-                        {message}
+                        <p className="text-sm">{message}</p>
                     </motion.div>
                 ))}
             </AnimatePresence>
