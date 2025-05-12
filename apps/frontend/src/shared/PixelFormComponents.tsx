@@ -1,4 +1,3 @@
-// shared/PixelFormComponents.tsx
 'use client';
 
 import React from 'react';
@@ -6,14 +5,14 @@ import React from 'react';
 export const PixelInput = ({ ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
-        className="w-full border-4 border-yellow-500 px-3 py-2 rounded-sm bg-yellow-100 text-black font-mono text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        className="w-full glass-effect px-4 py-3 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all duration-200"
     />
 );
 
 export const PixelButton = ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
     <button
         {...props}
-        className="bg-yellow-500 border-4 border-yellow-700 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded pixel-font uppercase transition"
+        className="glass-effect hover:bg-white/10 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover-scale disabled:opacity-50 disabled:cursor-not-allowed"
     >
         {children}
     </button>
