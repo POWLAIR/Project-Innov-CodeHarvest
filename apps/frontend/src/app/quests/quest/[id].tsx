@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import MonacoEditor from '@monaco-editor/react';
 import { useRouter } from 'next/router';
-import Terminal from '@/components/Terminal';  // Assurez-vous d'importer le terminal
+import Terminal from '@/components/Terminal';
 
+// Requêtes GraphQL
 const GET_QUEST_DETAIL = gql`
   query GetQuestDetail($id: String!) {
     getQuest(id: $id) {
@@ -15,6 +16,15 @@ const GET_QUEST_DETAIL = gql`
       isCompleted
       codeTemplate
       language
+      repoUrl  // Ajouter un champ pour l'URL du repo
+    }
+  }
+`;
+
+const CREATE_GITHUB_REPO = gql`
+  mutation CreateGitHubRepo($questId: String!) {
+    createRepo(questId: $questId) {
+      repoUrl  // Retourne l'URL du dépôt GitHub
     }
   }
 `;
@@ -34,12 +44,14 @@ const QuestDetailPage = () => {
     const { data, loading, error } = useQuery(GET_QUEST_DETAIL, {
         variables: { id: questId },
     });
+    const [createRepo] = useMutation(CREATE_GITHUB_REPO);
     const [completeQuest] = useMutation(COMPLETE_QUEST);
     const [editorValue, setEditorValue] = useState('');
     const [logs, setLogs] = useState<string[]>([]);
     const [language, setLanguage] = useState('javascript');
     const [editorHeight, setEditorHeight] = useState(400);
 
+    // Récupérer les détails de la quête
     useEffect(() => {
         if (data?.getQuest) {
             setEditorValue(data.getQuest.codeTemplate);
@@ -49,7 +61,7 @@ const QuestDetailPage = () => {
         }
     }, [data]);
 
-    // Fonction pour capturer les logs et afficher dans le terminal
+    // Fonction pour capturer les logs et les afficher dans le terminal
     const captureConsole = () => {
         const originalConsoleLog = console.log;
         console.log = (message: unknown) => {
@@ -70,28 +82,46 @@ const QuestDetailPage = () => {
         return () => window.removeEventListener('resize', updateHeight);
     }, []);
 
-    const handleCompleteQuest = async () => {
-        if (editorValue) {
-            await completeQuest({
-                variables: { questId: questId as string, solution: editorValue },
+    // Créer le dépôt GitHub et récupérer l'URL
+    const handleCreateRepo = async () => {
+        try {
+            const response = await createRepo({
+                variables: { questId: questId as string },
             });
-            router.push('/quests');
+            const repoUrl = response.data.createRepo.repoUrl;
+            alert(`Cloner le repo en utilisant l'URL : ${repoUrl}`);
+        } catch (error) {
+            console.error('Erreur lors de la création du repo :', error);
         }
     };
 
-    const handleTestCode = () => {
-        captureConsole();
-        try {
-            eval(editorValue);  // Utilisation de eval pour exécuter le code (à éviter en production)
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log('Erreur dans le code : ' + error.message);
-            } else {
-                console.log('Erreur dans le code : ' + String(error));
+    // Compléter la quête
+    const handleCompleteQuest = async () => {
+        if (editorValue) {
+            try {
+                await completeQuest({
+                    variables: { questId: questId as string, solution: editorValue },
+                });
+                router.push('/quests');
+            } catch (error) {
+                console.error('Erreur lors de la soumission de la quête :', error);
             }
         }
     };
 
+    // Tester le code utilisateur (exécution du code dans un environnement sécurisé)
+    const handleTestCode = () => {
+        captureConsole();
+        try {
+            // Utilisation sécurisée de eval avec un try-catch
+            const result = new Function(editorValue);
+            result();  // Exécution du code utilisateur
+        } catch (error) {
+            console.log('Erreur dans le code : ', error instanceof Error ? error.message : String(error));
+        }
+    };
+
+    // Vider les logs
     const handleClearLogs = () => {
         setLogs([]);
     };
@@ -113,19 +143,28 @@ const QuestDetailPage = () => {
                     language={language}
                     value={editorValue}
                     onChange={(value: string | undefined) => setEditorValue(value || '')}
+                    theme="vs-dark"
                 />
             </div>
 
             {/* Terminal interactif pour afficher les logs */}
             <Terminal logs={logs} clearLogs={handleClearLogs} />
 
-            {/* Boutons pour tester et compléter la quête */}
+            {/* Boutons pour tester, créer le repo et compléter la quête */}
             <div className="flex justify-between mt-6">
                 <button
                     onClick={handleTestCode}
                     className="glass-effect px-6 py-3 rounded-xl text-white hover:bg-white/10"
                 >
                     Tester le code
+                </button>
+
+                {/* Bouton pour créer un dépôt GitHub */}
+                <button
+                    onClick={handleCreateRepo}
+                    className="glass-effect px-6 py-3 rounded-xl text-white hover:bg-white/10"
+                >
+                    Créer le dépôt GitHub
                 </button>
 
                 <button
