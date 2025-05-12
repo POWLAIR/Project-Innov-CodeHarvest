@@ -4,7 +4,7 @@ import { GithubService } from './github.service';
 @Resolver()
 export class GithubResolver {
   constructor(private readonly githubService: GithubService) {}
-
+  
   @Query(() => String)
   async getUserQuestRepo(
     @Args('userId') userId: string,
