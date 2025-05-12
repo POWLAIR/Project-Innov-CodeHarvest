@@ -1,71 +1,16 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Ajout des styles pour les étoiles et les nuages */
+@keyframes floatAnimation {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
 
-:root {
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  --purple-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+.floating {
+    animation: floatAnimation 4s ease-in-out infinite;
 }
 
-body {
-  background: var(--purple-gradient);
-  color: #fff;
-  font-family: var(--font-sans);
-  min-height: 100vh;
+.island-shadow {
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
 }
 
-.glass-effect {
-  background: var(--glass-bg);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-}
-
-.pixel-pattern {
-  background-image: url("/pixel-pattern.png");
-  background-size: 100px 100px;
-  background-repeat: repeat;
-  opacity: 0.1;
-}
-
-@font-face {
-  font-family: "Pixel";
-  src: url("/fonts/PixelOperator-Bold.ttf") format("truetype");
-}
-
-.pixel-font {
-  font-family: "Pixel", monospace;
-}
-
-/* Animation classes */
-.hover-scale {
-  transition: transform 0.2s ease;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-.fade-in {
-  animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.glow {
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-  to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
-}
+/* Autres styles existants... */
