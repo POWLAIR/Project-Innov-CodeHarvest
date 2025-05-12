@@ -34,9 +34,8 @@ body {
   opacity: 0.1;
 }
 
-@font-face {
-  font-family: "Pixel";
-  src: url("/fonts/PixelOperator-Bold.ttf") format("truetype");
+.island-shadow {
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
 }
 
 .pixel-font {
