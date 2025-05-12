@@ -1,19 +1,50 @@
-/* Ajout des styles pour les étoiles et les nuages */
-@keyframes floatAnimation {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .floating {
     animation: floatAnimation 4s ease-in-out infinite;
+=======
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --purple-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+}
+
+body {
+  background: var(--purple-gradient);
+  color: #fff;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.pixel-pattern {
+  background-image: url("/pixel-pattern.png");
+  background-size: 100px 100px;
+  background-repeat: repeat;
+  opacity: 0.1;
+>>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
 }
 
 .island-shadow {
     filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
 }
 
+<<<<<<< HEAD
 /* Autres styles existants... */
 =======
 :root {
@@ -50,6 +81,8 @@ body {
   src: url("/fonts/PixelOperator-Bold.ttf") format("truetype");
 }
 
+=======
+>>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
 .pixel-font {
   font-family: "Pixel", monospace;
 }
@@ -94,4 +127,7 @@ body {
 .island-shadow {
   filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
 }
+<<<<<<< HEAD
 >>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
+=======
+>>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9

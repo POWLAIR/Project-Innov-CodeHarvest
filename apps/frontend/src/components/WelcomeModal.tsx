@@ -20,10 +20,14 @@ const WelcomeModal = ({ onClose }: { onClose: () => void }) => {
                     className="glass-effect hover:bg-white/10 px-6 py-3 rounded-xl text-white font-semibold transition-all duration-200 hover-scale"
                 >
 <<<<<<< HEAD
+<<<<<<< HEAD
                     Commencer l'aventure
 =======
                     Commencer l&#39;aventure
 >>>>>>> 9e7402c (feat: Enhance frontend with quest management and UI improvements)
+=======
+                    Commencer l&#39;aventure
+>>>>>>> 40628fd5d4ca1aa45ab90c0def66b36eb32314a9
                 </button>
             </motion.div>
         </div>
