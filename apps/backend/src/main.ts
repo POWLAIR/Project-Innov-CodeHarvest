@@ -4,12 +4,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // Autoriser toutes les origines
   app.enableCors({
-    origin: '*', // Permet à toutes les origines d'accéder à votre API
-    credentials: true, // Permet d'envoyer des cookies et d'autres informations d'authentification
+    origin: [process.env.NEXT_PUBLIC_API_URL, process.env.NEXT_PUBLIC_API_URL + '/signin', process.env.NEXT_PUBLIC_API_URL + '/login', 'http://localhost:3000'],
+    credentials: true,
   });
 
-  await app.listen(3001); // Assurez-vous que votre application écoute sur le bon port
+  await app.listen(3001);
 }
 bootstrap();
