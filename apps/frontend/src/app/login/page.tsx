@@ -88,7 +88,7 @@ const LoginPage = () => {
                             <p className="text-center text-white/80 text-sm">
                                 Pas encore de compte ?{' '}
                                 <Link href="/signup" className="text-indigo-300 hover:text-indigo-200 hover-scale inline-block">
-                                    S'inscrire
+                                    S&apos;inscrire
                                 </Link>
                             </p>
                         </Form>

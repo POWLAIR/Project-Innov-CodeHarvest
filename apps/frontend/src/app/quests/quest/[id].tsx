@@ -52,8 +52,8 @@ const QuestDetailPage = () => {
     // Fonction pour capturer les logs et afficher dans le terminal
     const captureConsole = () => {
         const originalConsoleLog = console.log;
-        console.log = (message: any) => {
-            setLogs((prevLogs) => [...prevLogs, message]);
+        console.log = (message: unknown) => {
+            setLogs((prevLogs) => [...prevLogs, message as string]);
             originalConsoleLog(message);
         };
     };
@@ -112,7 +112,7 @@ const QuestDetailPage = () => {
                     height={editorHeight}
                     language={language}
                     value={editorValue}
-                    onChange={(value: string) => setEditorValue(value || '')}
+                    onChange={(value: string | undefined) => setEditorValue(value || '')}
                 />
             </div>
 
