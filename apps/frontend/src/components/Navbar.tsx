@@ -13,40 +13,38 @@ const Navbar = () => {
     };
 
     return (
-        <header className="bg-[#101f1f]/90 backdrop-blur-md border-b-4 border-yellow-400 shadow-md font-pixel z-50 sticky top-0">
-            <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
-                {/* Logo & Titre */}
-                <Link href="/dashboard" className="flex items-center gap-3">
+        <header className="glass-effect sticky top-0 z-50 px-4 py-3 mb-6">
+            <div className="max-w-6xl mx-auto flex items-center justify-between">
+                <Link href="/dashboard" className="flex items-center gap-3 hover-scale">
                     <Image
                         src="/codeharvest-logo.png"
                         alt="CodeHarvest"
-                        width={32}
-                        height={32}
+                        width={40}
+                        height={40}
+                        className="rounded-xl glow"
                     />
-                    <span className="text-yellow-200 text-xl tracking-wide hover:text-yellow-400 transition">
+                    <span className="text-white text-xl font-semibold tracking-wide">
                         CodeHarvest
                     </span>
                 </Link>
 
-                {/* Liens de navigation */}
-                <nav className="flex gap-6 text-yellow-100 text-sm">
+                <nav className="flex gap-6">
                     <NavLink href="/dashboard" label="🌾 Ferme" />
                     <NavLink href="/quests" label="📜 Quêtes" />
                     <NavLink href="/profile" label="👤 Profil" />
                 </nav>
 
-                {/* Avatar + Déconnexion */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-4">
                     <Image
                         src="/npc/npc-dog-lv1.png"
                         alt="Avatar"
-                        width={28}
-                        height={28}
-                        className="rounded-full border-2 border-yellow-400"
+                        width={32}
+                        height={32}
+                        className="rounded-full glass-effect p-1"
                     />
                     <button
                         onClick={handleLogout}
-                        className="text-yellow-300 hover:text-red-400 text-xs transition-colors duration-200"
+                        className="text-red-300 hover:text-red-400 text-sm transition-colors duration-200 hover-scale"
                     >
                         Déconnexion
                     </button>
@@ -59,7 +57,7 @@ const Navbar = () => {
 const NavLink = ({ href, label }: { href: string; label: string }) => (
     <Link
         href={href}
-        className="hover:text-yellow-400 transition-all duration-150"
+        className="text-white/80 hover:text-white transition-all duration-150 hover-scale"
     >
         {label}
     </Link>

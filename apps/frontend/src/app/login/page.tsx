@@ -1,25 +1,31 @@
-// app/login/page.tsx
 'use client';
 
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image';
+import Link from 'next/link';
 import { PixelInput, PixelButton } from '@/shared/PixelFormComponents';
 
 const LoginPage = () => {
     const [authError, setAuthError] = useState<string | null>(null);
 
     return (
-        <div
-            className="min-h-screen flex items-center justify-center bg-[#0e1616] bg-repeat"
-            style={{ backgroundImage: "url('/pixel-pattern.png')" }}
-        >
-            <div className="bg-[#223322] border-4 border-yellow-500 p-6 w-full max-w-md rounded-xl shadow-2xl">
-                <div className="flex justify-center mb-4">
-                    <Image src="/codeharvest-logo.png" alt="Logo" width={80} height={80} />
+        <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+            <div className="absolute inset-0 pixel-pattern" />
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20" />
+
+            <div className="glass-effect p-8 w-full max-w-md rounded-2xl relative z-10">
+                <div className="flex justify-center mb-6">
+                    <Image
+                        src="/codeharvest-logo.png"
+                        alt="Logo"
+                        width={80}
+                        height={80}
+                        className="glow rounded-2xl"
+                    />
                 </div>
-                <h1 className="text-center text-yellow-300 text-2xl font-bold mb-6 pixel-font">Connexion</h1>
+                <h1 className="text-center text-white text-3xl font-bold mb-8 pixel-font">Connexion</h1>
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validationSchema={Yup.object({
@@ -60,22 +66,31 @@ const LoginPage = () => {
                     }}
                 >
                     {({ isSubmitting }) => (
-                        <Form className="flex flex-col gap-4">
+                        <Form className="flex flex-col gap-6">
                             <div>
-                                <label htmlFor="email" className="text-yellow-200 font-semibold text-sm">Email</label>
+                                <label htmlFor="email" className="text-white/90 font-medium text-sm mb-1 block">Email</label>
                                 <Field name="email" type="email" as={PixelInput} />
-                                <ErrorMessage name="email" component="div" className="text-red-500 text-xs mt-1" />
+                                <ErrorMessage name="email" component="div" className="text-red-400 text-xs mt-1" />
                             </div>
 
                             <div>
-                                <label htmlFor="password" className="text-yellow-200 font-semibold text-sm">Mot de passe</label>
+                                <label htmlFor="password" className="text-white/90 font-medium text-sm mb-1 block">Mot de passe</label>
                                 <Field name="password" type="password" as={PixelInput} />
-                                <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />
+                                <ErrorMessage name="password" component="div" className="text-red-400 text-xs mt-1" />
                             </div>
 
-                            {authError && <div className="text-red-500 text-xs text-center font-bold">{authError}</div>}
+                            {authError && <div className="text-red-400 text-sm text-center font-medium">{authError}</div>}
 
-                            <PixelButton type="submit" disabled={isSubmitting}>Se connecter</PixelButton>
+                            <PixelButton type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? 'Connexion...' : 'Se connecter'}
+                            </PixelButton>
+
+                            <p className="text-center text-white/80 text-sm">
+                                Pas encore de compte ?{' '}
+                                <Link href="/signup" className="text-indigo-300 hover:text-indigo-200 hover-scale inline-block">
+                                    S&#39;inscrire
+                                </Link>
+                            </p>
                         </Form>
                     )}
                 </Formik>

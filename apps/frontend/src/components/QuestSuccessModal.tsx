@@ -1,4 +1,3 @@
-// components/QuestSuccessModal.tsx
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,35 +13,65 @@ interface QuestSuccessModalProps {
 const QuestSuccessModal: FC<QuestSuccessModalProps> = ({ xp, coins, upgradeInfo, onClose }) => {
     return (
         <AnimatePresence>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
-            >
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
                 <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
+                    initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.8, opacity: 0 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
                     transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                    className="bg-[#1e2d2b] border-4 border-yellow-400 text-yellow-100 font-pixel p-6 rounded-xl shadow-xl w-80 text-center"
+                    className="glass-effect p-8 rounded-2xl text-center max-w-md w-[90%]"
                 >
-                    <h2 className="text-2xl mb-4 text-green-300">🎉 Quête réussie !</h2>
-                    <p className="text-lg">✨ +{xp} XP</p>
-                    <p className="text-lg">🪙 +{coins} pièces</p>
+                    <div className="relative">
+                        <motion.div
+                            initial={{ rotate: -10, scale: 0.9 }}
+                            animate={{ rotate: 0, scale: 1 }}
+                            transition={{ duration: 0.5 }}
+                            className="text-4xl mb-6"
+                        >
+                            🎉
+                        </motion.div>
+                        <h2 className="text-3xl font-bold text-white mb-6">Quête réussie !</h2>
 
-                    {upgradeInfo && (
-                        <p className="text-green-400 text-sm mt-2">⬆️ {upgradeInfo}</p>
-                    )}
+                        <div className="space-y-4 mb-8">
+                            <motion.div
+                                initial={{ x: -20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.2 }}
+                                className="glass-effect py-3 px-6 rounded-xl"
+                            >
+                                <p className="text-xl text-white">✨ +{xp} XP</p>
+                            </motion.div>
 
-                    <button
-                        onClick={onClose}
-                        className="mt-6 px-4 py-2 bg-yellow-400 text-black rounded hover:bg-yellow-300"
-                    >
-                        Retourner à la ferme
-                    </button>
+                            <motion.div
+                                initial={{ x: 20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.4 }}
+                                className="glass-effect py-3 px-6 rounded-xl"
+                            >
+                                <p className="text-xl text-white">🪙 +{coins} pièces</p>
+                            </motion.div>
+                        </div>
+
+                        {upgradeInfo && (
+                            <motion.p
+                                initial={{ y: 10, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.6 }}
+                                className="text-emerald-300 text-lg mb-6 glow"
+                            >
+                                ⬆️ {upgradeInfo}
+                            </motion.p>
+                        )}
+
+                        <button
+                            onClick={onClose}
+                            className="glass-effect hover:bg-white/10 px-8 py-3 rounded-xl text-white font-semibold transition-all hover-scale"
+                        >
+                            Continuer l&#39;aventure
+                        </button>
+                    </div>
                 </motion.div>
-            </motion.div>
+            </div>
         </AnimatePresence>
     );
 };

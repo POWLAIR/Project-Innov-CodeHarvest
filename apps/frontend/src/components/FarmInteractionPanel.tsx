@@ -60,8 +60,7 @@ const COMPLETE_QUEST = gql`
 
 const FarmInteractionPanel = ({ element, onClose, onUpgrade }: FarmInteractionPanelProps) => {
     const [tab, setTab] = useState<'info' | 'quests'>('info');
-    const buildingKey =
-        element?.type === 'field' ? 'cornLevel' : element?.type ? `${element.type}Level` : null;
+    const buildingKey = element?.type === 'field' ? 'cornLevel' : element?.type ? `${element.type}Level` : null;
 
     const [upgradeBuilding, { loading: loadingUpgrade }] = useMutation(UPGRADE_BUILDING, {
         variables: buildingKey ? { building: buildingKey } : undefined,
@@ -97,31 +96,33 @@ const FarmInteractionPanel = ({ element, onClose, onUpgrade }: FarmInteractionPa
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 20 }}
-                        className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#1e2d2b] border-4 border-yellow-400 text-yellow-100 font-pixel px-6 py-4 rounded-xl shadow-lg z-40 w-[320px]"
+                        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 glass-effect p-6 rounded-2xl text-white w-[90%] max-w-md z-40"
                     >
-                        <div className="flex justify-between mb-2">
+                        <div className="flex justify-between mb-6">
                             <button
                                 onClick={() => setTab('info')}
-                                className={`px-2 ${tab === 'info' ? 'text-yellow-300' : 'text-yellow-500'}`}
+                                className={`px-4 py-2 rounded-xl transition-all ${tab === 'info' ? 'glass-effect text-white' : 'text-white/70 hover:text-white'}`}
                             >
                                 Infos
                             </button>
                             <button
                                 onClick={() => setTab('quests')}
-                                className={`px-2 ${tab === 'quests' ? 'text-yellow-300' : 'text-yellow-500'}`}
+                                className={`px-4 py-2 rounded-xl transition-all ${tab === 'quests' ? 'glass-effect text-white' : 'text-white/70 hover:text-white'}`}
                             >
                                 Quêtes
                             </button>
                         </div>
 
                         {tab === 'info' ? (
-                            <div>
-                                <h2 className="text-lg mb-2">{element.alt}</h2>
-                                <p>Type : {element.type}</p>
-                                <p>Niveau : {element.level}</p>
+                            <div className="space-y-4">
+                                <h2 className="text-2xl font-semibold">{element.alt}</h2>
+                                <div className="space-y-2 text-white/80">
+                                    <p>Type : {element.type}</p>
+                                    <p>Niveau : {element.level}</p>
+                                </div>
 
                                 <button
-                                    className="mt-3 bg-yellow-400 text-black px-4 py-1 rounded hover:bg-yellow-300 disabled:opacity-50"
+                                    className="w-full glass-effect hover:bg-white/10 py-3 rounded-xl transition-all hover-scale disabled:opacity-50 disabled:cursor-not-allowed"
                                     onClick={() => upgradeBuilding()}
                                     disabled={loadingUpgrade || !buildingKey}
                                 >
@@ -129,23 +130,23 @@ const FarmInteractionPanel = ({ element, onClose, onUpgrade }: FarmInteractionPa
                                 </button>
                             </div>
                         ) : (
-                            <div>
-                                <h2 className="text-lg mb-2">📋 Quêtes disponibles</h2>
+                            <div className="space-y-4">
+                                <h2 className="text-2xl font-semibold">📋 Quêtes disponibles</h2>
                                 {loadingQuests ? (
-                                    <p>Chargement...</p>
+                                    <p className="text-white/70">Chargement...</p>
                                 ) : error ? (
-                                    <p>Erreur lors du chargement</p>
+                                    <p className="text-red-400">Erreur lors du chargement</p>
                                 ) : quests.length === 0 ? (
-                                    <p>Aucune quête disponible</p>
+                                    <p className="text-white/70">Aucune quête disponible</p>
                                 ) : (
-                                    <ul className="space-y-2">
+                                    <div className="space-y-3">
                                         {quests.map((quest) => (
-                                            <li key={quest.id} className="border border-yellow-300 p-2 rounded">
-                                                <p className="text-yellow-200 font-bold">{quest.title}</p>
-                                                <p className="text-sm">{quest.description}</p>
+                                            <div key={quest.id} className="glass-effect p-4 rounded-xl space-y-2">
+                                                <h3 className="text-lg font-semibold">{quest.title}</h3>
+                                                <p className="text-white/80">{quest.description}</p>
                                                 {!quest.isCompleted && (
                                                     <button
-                                                        className="mt-2 text-sm text-blue-400 hover:underline"
+                                                        className="text-indigo-300 hover:text-indigo-200 hover-scale text-sm"
                                                         onClick={async () => {
                                                             await completeQuest({ variables: { questId: quest.id } });
                                                             setQuests((prev) =>
@@ -158,18 +159,18 @@ const FarmInteractionPanel = ({ element, onClose, onUpgrade }: FarmInteractionPa
                                                         }}
                                                         disabled={quest.isCompleted}
                                                     >
-                                                        Terminer
+                                                        Terminer la quête
                                                     </button>
                                                 )}
-                                            </li>
+                                            </div>
                                         ))}
-                                    </ul>
+                                    </div>
                                 )}
                             </div>
                         )}
 
                         <button
-                            className="mt-4 text-yellow-300 hover:text-red-400 text-sm"
+                            className="mt-6 text-white/70 hover:text-white text-sm transition-colors"
                             onClick={onClose}
                         >
                             Fermer
